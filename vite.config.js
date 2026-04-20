@@ -1,12 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Se fizerem deploy em phish-n-chips25.github.io (user/org page) -> base: '/'
-// Se fizerem deploy em phish-n-chips25.github.io/Challange-3/ -> base: '/Challange-3/'
-// Alterar conforme o vosso cenário antes de fazer `npm run build`.
+// GitHub Pages project site: https://phish-n-chips25.github.io/challenge3-pitch/
+// Vercel / domínio próprio / user-page (phish-n-chips25.github.io) -> base: '/'
+// Project page no GitHub Pages -> base: '/challenge3-pitch/'
+const isGhPages = process.env.DEPLOY_TARGET === 'gh-pages'
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: isGhPages ? '/challenge3-pitch/' : '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
