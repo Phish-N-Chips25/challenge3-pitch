@@ -40,7 +40,7 @@ export const translations = {
         {
           tag: 'Pilar 02 — Algo está errado?',
           title: 'Deteção de anomalias',
-          body: 'TransformerAE aprende comportamento benigno em 2.3M eventos Sysmon. Single-event AE pontua cada evento individualmente. Juntos, identificam chains suspeitas com precisão cirúrgica.',
+          body: 'Dois pipelines paralelos sobre os mesmos logs Sysmon: cyber-anomaly-detection (TransformerAE + Single-event AE + RAG/Qwen 32B) e DualSentinel (Heuristic Scorer + SLM Phi-3 → LLM Judge Llama 3.2). Maximalismo vs auditabilidade.',
         },
         {
           tag: 'Pilar 03 — O que é?',
@@ -85,9 +85,26 @@ export const translations = {
 
     anomaly: {
       eyebrow: 'Capítulo 03 · Deteção de anomalias',
-      title: 'Detetar o desconhecido\nem 2.3M eventos.',
+      title: 'Mesma análise Sysmon,\nduas abordagens.',
       lead:
-        'Sistemas baseados em regras só veem o que já foi descrito. O nosso TransformerAE aprendeu comportamento benigno de forma não supervisionada — tudo o resto é ameaça.',
+        'Construímos dois pipelines independentes sobre os mesmos logs Windows Sysmon — um maximalista, outro auditável. Cada um responde à pergunta "isto é uma ameaça?" de forma diferente, e ambos foram avaliados nos mesmos datasets.',
+
+      compareTitle: 'Quando escolher cada abordagem',
+      compareSubtitle: 'Mesmo input, filosofias opostas: aprendizagem profunda + LLM grande versus heurísticas auditáveis + LLMs pequenos.',
+      compareHeaders: ['Critério', 'cyber-anomaly-detection', 'DualSentinel'],
+      compareRows: [
+        ['Deteção', 'TransformerAE + Single-event AE (não supervisionado)', 'Heuristic Scorer (regras ATT&CK + smart features + baseline + KB hybrid)'],
+        ['Atribuição', 'RAG híbrido + Qwen 2.5 32B', 'SLM Phi-3 Medium → LLM Judge Llama 3.2'],
+        ['Auditabilidade', 'Score por evento, embeddings opacos', 'Cada termo do score é inspecionável'],
+        ['Hardware', 'GPU recomendada (LLM 32B)', 'Corre confortavelmente em CPU / GPU pequena'],
+        ['Métrica de referência', 'AP 0.836 (Splunk) · AUC 0.992', 'F1 calibrado por threshold sweep no LMD-2023'],
+      ],
+
+      // Abordagem A — cyber-anomaly-detection
+      approachATag: 'Abordagem A · cyber-anomaly-detection',
+      approachATitle: 'Aprender o benigno em 2.3M eventos.',
+      approachALead:
+        'Pipeline maximalista de duas camadas com atribuição RAG + LLM grande. 10 notebooks de investigação documentam a evolução desde EDA, baseline (IsolationForest, KMeans, OCSVM), CASH com Optuna, até aos autoencoders como solução óptima.',
 
       classicalTag: 'Camada 01 — Sequências',
       classicalTitle: 'Sequence TransformerAE',
@@ -100,9 +117,8 @@ export const translations = {
       sentinelTitle: 'Single-Event Autoencoder',
       sentinelBody:
         'Dentro de cada chain sinalizada, cada evento individual é pontuado por um Autoencoder de 4 camadas [353→231→176→162→8] com activação ELU. Identifica os eventos exactos mais anómalos — fornecendo ao analista uma vista cirúrgica da ameaça.',
-      sentinelPipelineCaption: 'Pipeline de deteção — logs crus a eventos sinalizados.',
 
-      mitigationTitle: 'Camada 03 — Atribuição ATT&CK',
+      mitigationTitle: 'Camada 03 — Atribuição ATT&CK (RAG + Qwen 2.5 32B)',
       mitigationLead:
         'Detetar que algo é anómalo não chega. O RAG híbrido recupera contexto de 3.463 entradas MITRE/OTRF/Sigma e envia ao Qwen 2.5 32B com um prompt chain-of-thought estruturado.',
       mitigations: [
@@ -138,6 +154,27 @@ export const translations = {
         value: '0.992',
         detail: 'Generalização genuina: treinado em LMD-2023, avaliado em OTRF Atomic Red Team e Splunk Attack Range sem re-treino.',
       },
+
+      // Abordagem B — DualSentinel
+      approachBTag: 'Abordagem B · DualSentinel',
+      approachBTitle: 'Auditável por design.',
+      approachBLead:
+        'Pipeline alternativo onde cada decisão é inspecionável. A arquitectura clássica IsolationForest + GRU foi substituída por um Heuristic Scorer transparente: testes empíricos no LMD-2023 e Splunk Attack Data mostraram que os modelos opacos não traziam ganho mensurável e impediam o LLM Judge de auditar a evidência.',
+      approachBPipelineCaption: 'Pipeline DualSentinel — Heuristic Scorer → SLM Analyst → LLM Judge.',
+      approachBHighlights: [
+        {
+          title: 'Heuristic Scorer transparente',
+          body: 'Regras ATT&CK confirmadas, 7 smart-feature flags, desvio à baseline self-supervised, hits da KB hybrid (Chroma + BM25 com RRF). Cada termo do score é inspecionável.',
+        },
+        {
+          title: 'SLM → LLM como chain-of-thought',
+          body: 'Phi-3 Medium produz uma hipótese rápida; Llama 3.2 valida-a ou refuta-a com referências explícitas aos eventos. O judge tem uma âncora — não parte de uma folha em branco.',
+        },
+        {
+          title: 'Defesa académica em 4 notebooks',
+          body: 'defesa_lmd_full_report (17 secções), threshold_calibration (sweep F1/Youden/FPR), kb_ablation (on/off da KB hybrid) e eda. Tudo reproduzível.',
+        },
+      ],
     },
 
     face: {
@@ -318,7 +355,7 @@ export const translations = {
         {
           tag: 'Pillar 02 — Is something wrong?',
           title: 'Anomaly detection',
-          body: 'TransformerAE learns benign behaviour from 2.3M Sysmon events. Single-event AE scores each event individually. Together they pinpoint suspicious chains with surgical precision.',
+          body: 'Two parallel pipelines over the same Sysmon logs: cyber-anomaly-detection (TransformerAE + Single-event AE + RAG/Qwen 32B) and DualSentinel (Heuristic Scorer + SLM Phi-3 → LLM Judge Llama 3.2). Maximalism vs auditability.',
         },
         {
           tag: 'Pillar 03 — What is it?',
@@ -363,9 +400,26 @@ export const translations = {
 
     anomaly: {
       eyebrow: 'Chapter 03 · Anomaly detection',
-      title: 'Detecting the unknown\nin 2.3M events.',
+      title: 'Same Sysmon analysis,\ntwo approaches.',
       lead:
-        'Rule-based systems only see what has already been described. Our TransformerAE learned benign behaviour in an unsupervised fashion — everything else is a threat.',
+        'We built two independent pipelines over the same Windows Sysmon logs — one maximalist, one auditable. Each one answers "is this a threat?" differently, and both were evaluated on the same datasets.',
+
+      compareTitle: 'When to pick each approach',
+      compareSubtitle: 'Same input, opposite philosophies: deep learning + large LLM versus auditable heuristics + small LLMs.',
+      compareHeaders: ['Criterion', 'cyber-anomaly-detection', 'DualSentinel'],
+      compareRows: [
+        ['Detection', 'TransformerAE + Single-event AE (unsupervised)', 'Heuristic Scorer (ATT&CK rules + smart features + baseline + KB hybrid)'],
+        ['Attribution', 'Hybrid RAG + Qwen 2.5 32B', 'SLM Phi-3 Medium → LLM Judge Llama 3.2'],
+        ['Auditability', 'Per-event score, opaque embeddings', 'Every term of the score is inspectable'],
+        ['Hardware', 'GPU recommended (32B LLM)', 'Comfortably runs on CPU / small GPU'],
+        ['Reference metric', 'AP 0.836 (Splunk) · AUC 0.992', 'F1 calibrated via threshold sweep on LMD-2023'],
+      ],
+
+      // Approach A — cyber-anomaly-detection
+      approachATag: 'Approach A · cyber-anomaly-detection',
+      approachATitle: 'Learning the benign in 2.3M events.',
+      approachALead:
+        'Maximalist two-layer pipeline with RAG + large-LLM attribution. 10 research notebooks document the journey from EDA, baselines (IsolationForest, KMeans, OCSVM), CASH with Optuna, all the way to autoencoders as the optimal solution.',
 
       classicalTag: 'Layer 01 — Sequences',
       classicalTitle: 'Sequence TransformerAE',
@@ -378,9 +432,8 @@ export const translations = {
       sentinelTitle: 'Single-Event Autoencoder',
       sentinelBody:
         'Within each flagged chain, each individual event is scored by a 4-layer Autoencoder [353→231→176→162→8] with ELU activation. Identifies the exact most anomalous events — giving the analyst a surgical view of the threat.',
-      sentinelPipelineCaption: 'Detection pipeline — raw logs to flagged events.',
 
-      mitigationTitle: 'Layer 03 — ATT&CK Attribution',
+      mitigationTitle: 'Layer 03 — ATT&CK Attribution (RAG + Qwen 2.5 32B)',
       mitigationLead:
         'Detecting that something is anomalous is not enough. The hybrid RAG retrieves context from 3,463 MITRE/OTRF/Sigma entries and sends it to Qwen 2.5 32B with a structured chain-of-thought prompt.',
       mitigations: [
@@ -416,6 +469,27 @@ export const translations = {
         value: '0.992',
         detail: 'Genuine generalisation: trained on LMD-2023, evaluated on OTRF Atomic Red Team and Splunk Attack Range without retraining.',
       },
+
+      // Approach B — DualSentinel
+      approachBTag: 'Approach B · DualSentinel',
+      approachBTitle: 'Auditable by design.',
+      approachBLead:
+        'Alternative pipeline where every decision is inspectable. The classical IsolationForest + GRU architecture was replaced by a transparent Heuristic Scorer: empirical tests on LMD-2023 and Splunk Attack Data showed that opaque models brought no measurable gain and prevented the LLM Judge from auditing the evidence.',
+      approachBPipelineCaption: 'DualSentinel pipeline — Heuristic Scorer → SLM Analyst → LLM Judge.',
+      approachBHighlights: [
+        {
+          title: 'Transparent Heuristic Scorer',
+          body: 'Confirmed ATT&CK rules, 7 smart-feature flags, deviation from a self-supervised baseline, hits from the hybrid KB (Chroma + BM25 with RRF). Every term of the score is inspectable.',
+        },
+        {
+          title: 'SLM → LLM as chain-of-thought',
+          body: 'Phi-3 Medium produces a fast hypothesis; Llama 3.2 validates or refutes it with explicit references to events. The judge has an anchor — it does not start from a blank page.',
+        },
+        {
+          title: 'Academic defence in 4 notebooks',
+          body: 'defesa_lmd_full_report (17 sections), threshold_calibration (F1/Youden/FPR sweep), kb_ablation (on/off of the hybrid KB) and eda. Fully reproducible.',
+        },
+      ],
     },
 
     face: {
