@@ -139,13 +139,13 @@
 
 *Clicar em Play. Comentar ao vivo:*
 
-- **0–4s** → "O analista autentica o rosto. InsightFace: similaridade cosseno acima de 0.70. Acesso concedido. Dashboard abre."  
-- **4–8.5s** → "Os logs Sysmon começam a chegar. EID:1 PowerShell, EID:3 conexão de rede, EID:7 DLL carregada no lsass. Comportamento anómalo a emergir."  
-- **8.5–13.5s** → "O TransformerAE assinala a chain. AP 0.814. 45 eventos consecutivos com reconstrução acima do threshold."  
-- **13.5–17s** → "O Single-event AE isola os três eventos mais anómalos. Vista cirúrgica para o analista."  
-- **17–22s** → "RAG híbrido consulta as 3.463 técnicas. Qwen 2.5 produz veredicto: T1059 — Execution. Com evidências dos logs."
+- **0–4s** → "Um e-mail de phishing chega ao endpoint HR-WS-04. O processo PowerShell spawna. O sistema fica comprometido."
+- **4–8.5s** → "Movimento lateral. Os logs Sysmon começam a stremar: EID:1 PowerShell, EID:3 conexão de rede, EID:7 DLL injectada no lsass, EID:22 DNS query para C2."
+- **8.5–13.5s** → "O LNIAGIA deteta. A chain é sinalizada — TransformerAE e DualSentinel emitem alerta. Badge vermelho."
+- **13.5–17s** → "Do lado físico, um intruso avança em direcção à porta. A câmara começa a capturar."
+- **17–22s** → "ArcFace compara o embedding contra as identidades autorizadas. Não há match. A porta recusa. NEGADO."
 
-> "Três pilares, um fluxo contínuo."
+> "Dois domínios, dois bloqueios. Um sistema coeso."
 
 ---
 

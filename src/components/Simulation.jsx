@@ -8,27 +8,27 @@ const EASE = [0.22, 1, 0.36, 1]
  * Simulação cinematográfica do sistema completo.
  * Encenação em 5 actos, ~22s de loop com replay manual.
  *
- * Acto 1 — Phishing chega ao endpoint Windows
- * Acto 2 — Movimento lateral (logs Sysmon a streamar)
- * Acto 3 — LNIAGIA: Classical detector + Dual Sentinel emitem veredicto
- * Acto 4 — Atacante físico tenta passar a porta; câmara captura
- * Acto 5 — RNAAPIA: ArcFace compara contra galeria → ACESSO NEGADO
+ * Acto 1 — Analista autentica rosto (RNAAPIA · InsightFace · threshold 0.70)
+ * Acto 2 — Dashboard carrega · logs Sysmon em stream
+ * Acto 3 — TransformerAE · chain sinalizada (AP 0.814)
+ * Acto 4 — Single-event AE · eventos anómalos isolados
+ * Acto 5 — RAG + Qwen 2.5 · T1059 Execution atribuída
  */
 
 const ACTS_PT = [
-  { id: 1, label: 'Analista autentica rosto · threshold 0.70', range: [0, 4] },
-  { id: 2, label: 'Dashboard carrega · logs Sysmon em stream', range: [4, 8.5] },
-  { id: 3, label: 'TransformerAE · chain sinalizada (AP 0.814)', range: [8.5, 13.5] },
-  { id: 4, label: 'Single-event AE · eventos anómalos isolados', range: [13.5, 17] },
-  { id: 5, label: 'RAG + Qwen 2.5 · T1059 Execution atribuída', range: [17, 22] },
+  { id: 1, label: 'Phishing · endpoint HR-WS-04 comprometido', range: [0, 4] },
+  { id: 2, label: 'Movimento lateral · logs Sysmon em stream', range: [4, 8.5] },
+  { id: 3, label: 'LNIAGIA · chain sinalizada — alerta emitido', range: [8.5, 13.5] },
+  { id: 4, label: 'Intruso físico avança · câmara captura', range: [13.5, 17] },
+  { id: 5, label: 'RNAAPIA · ArcFace compara · NEGADO', range: [17, 22] },
 ]
 
 const ACTS_EN = [
-  { id: 1, label: 'Analyst authenticates face · threshold 0.70', range: [0, 4] },
-  { id: 2, label: 'Dashboard loads · Sysmon logs streaming', range: [4, 8.5] },
-  { id: 3, label: 'TransformerAE · chain flagged (AP 0.814)', range: [8.5, 13.5] },
-  { id: 4, label: 'Single-event AE · anomalous events isolated', range: [13.5, 17] },
-  { id: 5, label: 'RAG + Qwen 2.5 · T1059 Execution attributed', range: [17, 22] },
+  { id: 1, label: 'Phishing · endpoint HR-WS-04 compromised', range: [0, 4] },
+  { id: 2, label: 'Lateral movement · Sysmon logs streaming', range: [4, 8.5] },
+  { id: 3, label: 'LNIAGIA · chain flagged — alert raised', range: [8.5, 13.5] },
+  { id: 4, label: 'Physical intruder approaches · camera captures', range: [13.5, 17] },
+  { id: 5, label: 'RNAAPIA · ArcFace compares · DENIED', range: [17, 22] },
 ]
 
 const TOTAL = 22
