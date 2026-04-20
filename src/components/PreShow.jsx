@@ -37,7 +37,7 @@ export default function PreShow() {
 
   const handleAudio = () => {
     if (!audioRef.current) {
-      const a = new Audio('/bensound-echoesfromthemountain.mp3')
+      const a = new Audio('/challenge3-pitch/bensound-echoesfromthemountain.mp3')
       a.loop = true
       a.volume = 0
       audioRef.current = a
