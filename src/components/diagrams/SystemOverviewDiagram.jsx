@@ -100,7 +100,7 @@ export default function SystemOverviewDiagram() {
           {l.m1Name}
         </text>
         <text x={86} y={368} fontSize="10" fill="#c9c3b3" className="font-mono" letterSpacing="1">
-          LNIAGIA · Dual Sentinel
+          LNIAGIA · cyber-anomaly + DualSentinel
         </text>
       </g>
 

@@ -250,7 +250,7 @@ function SimStage({ time, lang }) {
 
       {/* Detector — círculo concêntrico que pulsa quando detecta */}
       <g transform="translate(120, 380)">
-        <DetectorBadge label="LNIAGIA" sublabel="Dual Sentinel" active={detectFlash} verdict={time > 11 ? 'malicious' : null} />
+        <DetectorBadge label="LNIAGIA" sublabel="cyber-anomaly + DualSentinel" active={detectFlash} verdict={time > 11 ? 'malicious' : null} />
       </g>
 
       {/* ───── Lado físico ───── */}
@@ -487,7 +487,7 @@ function VerdictPanel({ time, lang }) {
       <div className="eyebrow-muted mb-3">{lang === 'en' ? 'Verdicts' : 'Veredictos'}</div>
 
       <Verdict
-        title="LNIAGIA · Dual Sentinel"
+        title="LNIAGIA · cyber-anomaly + DualSentinel"
         active={sentinel}
         label={sentinel ? 'MALICIOUS' : (lang === 'en' ? 'analyzing…' : 'a analisar…')}
         rationale={

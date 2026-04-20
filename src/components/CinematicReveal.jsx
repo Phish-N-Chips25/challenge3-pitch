@@ -16,7 +16,7 @@ const EASE = [0.22, 1, 0.36, 1]
  *   1  Push-in num blueprint do edifício
  *   2  Zoom digital  → endpoints + LNIAGIA assina logs
  *   3  Pan físico    → câmara + RNAAPIA assina rosto
- *   4  Pull-back     → ambos se unem em "DUAL SENTINEL"
+ *   4  Pull-back     → ambos se unem em "DETEÇÃO DE ANOMALIAS" (cyber-anomaly + DualSentinel)
  */
 const SCENES = [
   { dur: 3.4 }, // 0 title
@@ -550,7 +550,7 @@ function UnionScene({ lang, p }) {
         transition={{ duration: 1.2, ease: EASE }}
         className="font-display font-light text-5xl md:text-7xl mt-2 text-paper-100"
       >
-        DUAL SENTINEL
+        {lang === 'en' ? 'ANOMALY DETECTION' : 'DETEÇÃO DE ANOMALIAS'}
       </motion.h2>
       <motion.p
         initial={{ opacity: 0 }}
@@ -558,7 +558,7 @@ function UnionScene({ lang, p }) {
         transition={{ duration: 0.8 }}
         className="mt-4 font-mono text-xs text-phosphor uppercase tracking-[0.4em]"
       >
-        {lang === 'en' ? 'two walls. one verdict.' : 'duas paredes. um veredicto.'}
+        {lang === 'en' ? 'cyber-anomaly + DualSentinel · two approaches.' : 'cyber-anomaly + DualSentinel · duas abordagens.'}
       </motion.p>
     </motion.div>
   )
