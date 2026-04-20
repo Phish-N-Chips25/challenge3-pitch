@@ -78,7 +78,7 @@ export const translations = {
         tag: 'LNIAGIA · ATT&CK',
         title: 'Knowledge Base partilhada',
         desc:
-          'Base de conhecimento com 3.463 entradas MITRE/OTRF/Splunk/Sigma indexada em ChromaDB + BM25 (RRF). Partilhada pelos dois pipelines: cyber-anomaly-detection consome-a via RAG híbrido + Qwen 2.5 32B; DualSentinel via SLM Phi-3 Medium → LLM Judge Llama 3.2. 100% local via Ollama.',
+          'Base de conhecimento com 3.463 entradas MITRE/OTRF/Splunk/SigmaRules indexada em ChromaDB + BM25 (RRF). Partilhada pelos dois pipelines: cyber-anomaly-detection consome-a via RAG híbrido + Qwen 2.5 32B; DualSentinel via SLM Phi-3 Medium → LLM Judge Llama 3.2. 100% local via Ollama.',
         stack: ['ChromaDB', 'BM25', 'Qwen 2.5 32B', 'Phi-3 Medium', 'Llama 3.2', 'Ollama', 'MITRE STIX'],
       },
     },
@@ -97,7 +97,7 @@ export const translations = {
         ['Atribuição', 'RAG híbrido + Qwen 2.5 32B', 'SLM Phi-3 Medium → LLM Judge Llama 3.2'],
         ['Auditabilidade', 'Score por evento, embeddings opacos', 'Cada termo do score é inspecionável'],
         ['Hardware', 'GPU recomendada (LLM 32B)', 'Corre confortavelmente em CPU / GPU pequena'],
-        ['Métrica de referência', 'AP 0.836 (Splunk) · AUC 0.992', 'F1 calibrado por threshold sweep no LMD-2023'],
+        ['Métrica de referência', 'AP 0.956 (LMD-2023) · 0.949 (Splunk) · 0.8141(ORTF)', 'F1 calibrado por threshold sweep no LMD-2023'],
       ],
 
       // Abordagem A — cyber-anomaly-detection
@@ -109,9 +109,9 @@ export const translations = {
       classicalTag: 'Camada 01 — Sequências',
       classicalTitle: 'Sequence TransformerAE',
       classicalBody:
-        'Janelas de 45 eventos consecutivos convertidos em embeddings Word2Vec 352-dim. Transformer Autoencoder (NAS+HPO via Optuna: hidden=256, latent=128, 2 layers, 8 heads) aprende a reconstruir comportamento benigno. Erro de reconstrução > 0.627528 sinaliza a chain como suspeita.',
+        'Janelas de 45 eventos consecutivos convertidos em embeddings Word2Vec 352-dim. Transformer Autoencoder (NAS+HPO via Optuna: hidden=256, latent=128, 2 layers, 8 heads) aprende a reconstruir comportamento benigno.',
       classicalPros: ['Treinado 100% não supervisionado em 2.3M eventos benignos', 'AP = 0.814 em OTRF Atomic Red Team', 'AP = 0.836 em Splunk Attack Range'],
-      classicalCons: ['Requer calibração do threshold por dataset', 'Janela de 45 eventos pode perder eventos isolados', 'Custo computacional do Transformer'],
+      classicalCons: ['Requer calibração do threshold por dataset', 'Janela de 45 eventos pode perder eventos isolados'],
 
       sentinelTag: 'Camada 02 — Eventos',
       sentinelTitle: 'Single-Event Autoencoder',
@@ -120,7 +120,7 @@ export const translations = {
 
       mitigationTitle: 'Camada 03 — Atribuição ATT&CK (RAG + Qwen 2.5 32B)',
       mitigationLead:
-        'Detetar que algo é anómalo não chega. O RAG híbrido recupera contexto de 3.463 entradas MITRE/OTRF/Sigma e envia ao Qwen 2.5 32B com um prompt chain-of-thought estruturado.',
+        'Detetar que algo é anómalo não chega. O RAG híbrido recupera contexto de 3.463 entradas MITRE/OTRF/SigmaRules e envia ao Qwen 2.5 32B com um prompt chain-of-thought estruturado.',
       mitigations: [
         {
           n: '01',
@@ -151,7 +151,7 @@ export const translations = {
 
       prefilterStat: {
         label: 'AUC cross-dataset (LMD → OTRF → Splunk)',
-        value: '0.992',
+        value: '~0.990',
         detail: 'Generalização genuina: treinado em LMD-2023, avaliado em OTRF Atomic Red Team e Splunk Attack Range sem re-treino.',
       },
 
@@ -221,12 +221,12 @@ export const translations = {
       metrics: [
         { label: 'Abord. A · TransformerAE · AP em OTRF Atomic', value: '0.814', unit: '', kind: 'accuracy' },
         { label: 'Abord. A · TransformerAE · AP em Splunk Range', value: '0.836', unit: '', kind: 'accuracy' },
-        { label: 'Abord. A · Single-event AE · AUC cross-dataset', value: '0.992', unit: '', kind: 'biometric' },
+        { label: 'Abord. A · Single-event AE · AP cross-dataset', value: '0.92', unit: '', kind: 'biometric' },
         { label: 'Abord. A · RAG ATT&CK · Recall em OTRF', value: '60', unit: '%', kind: 'config' },
       ],
 
       tableClosedCaption: 'Tabela A — Classificação closed-set (5 identidades, dataset organizacional)',
-      tableClosedNote: 'Resultados em conjunto de teste controlado com augmentation ~20×. Tarefa: "deste rosto, qual das 5 identidades?"',
+      tableClosedNote: 'Resultados em conjunto de teste controlado com augmentation ~20x. Tarefa: "deste rosto, qual das 5 identidades?"',
       tableClosed: {
         headers: ['Modelo', 'Acc.', 'F1 Macro', 'Precision', 'Recall', 'AUC OvR'],
         rows: [
@@ -248,8 +248,8 @@ export const translations = {
 
       sentinelTitle: 'Pipeline partilhado — números globais',
       sentinelMetrics: [
-        { label: 'Eventos Sysmon benignos para treino (Abord. A)', value: '2.3M', unit: '' },
-        { label: 'Entradas na KB MITRE/OTRF/Sigma (partilhada)', value: '3.463', unit: '' },
+        { label: 'Eventos Sysmon benignos para treino (Abord. A)', value: '2.3', unit: 'Million' },
+        { label: 'Entradas na KB MITRE/OTRF/SigmaRules (partilhada)', value: '3463', unit: '' },
         { label: 'T-codes com ground truth', value: '230', unit: 'técnicas' },
         { label: 'LLMs a correr localmente', value: '100%', unit: 'local' },
       ],
@@ -541,7 +541,7 @@ export const translations = {
       ],
 
       tableClosedCaption: 'Table A — Closed-set classification (5 identities, organisational dataset)',
-      tableClosedNote: 'Results on a controlled test split with ~20× augmentation. Task: "given this face, which of the 5 identities?"',
+      tableClosedNote: 'Results on a controlled test split with ~20x augmentation. Task: "given this face, which of the 5 identities?"',
       tableClosed: {
         headers: ['Model', 'Acc.', 'F1 Macro', 'Precision', 'Recall', 'AUC OvR'],
         rows: [

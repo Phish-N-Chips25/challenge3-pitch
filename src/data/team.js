@@ -12,7 +12,7 @@ export const teamMembers = [
     name: 'César Vieira',
     number: '1241523',
     email: '1241523@isep.ipp.pt',
-    role: { pt: 'Pipeline clássico · Logs Sysmon', en: 'Classical pipeline · Sysmon logs' },
+    role: { pt: 'Pipeline clássico · Logs Sysmon · Construção da KB', en: 'Classical pipeline · Sysmon logs · KB Development' },
   },
   {
     name: 'Gonçalo Jesus',
