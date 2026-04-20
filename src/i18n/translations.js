@@ -56,7 +56,7 @@ export const translations = {
       eyebrow: 'Capítulo 02 · Arquitectura',
       title: 'Três pilares,\num sistema coeso.',
       lead:
-        'Autenticação facial desbloqueia o SOC dashboard. A deteção de anomalias opera em duas camadas sobre logs Sysmon. A atribuição RAG+LLM diz ao analista exactamente o quê e porquê.',
+        'Autenticação facial desbloqueia o SOC dashboard. Sobre os logs Sysmon corremos dois pipelines independentes — um maximalista (TransformerAE + RAG/Qwen 32B), outro auditável (Heuristic Scorer + Phi-3 → Llama 3.2). Mesmo input, filosofias opostas.',
       module1: {
         number: '01',
         tag: 'RNAAPIA',
@@ -68,10 +68,10 @@ export const translations = {
       module2: {
         number: '02',
         tag: 'LNIAGIA · Anomalias',
-        title: 'Deteção em duas camadas',
+        title: 'Dois pipelines paralelos',
         desc:
-          'Sequence TransformerAE (janelas de 45 eventos, Word2Vec 352-dim, NAS+HPO via Optuna). Single-event AE pontua cada evento individualmente para vista cirúrgica da ameaça.',
-        stack: ['PyTorch', 'TransformerAE', 'Word2Vec', 'Optuna', 'LMD-2023', 'OTRF'],
+          'cyber-anomaly-detection: TransformerAE (45 eventos, Word2Vec 352-dim, NAS+HPO Optuna) + Single-event AE + RAG híbrido com Qwen 2.5 32B. DualSentinel: Heuristic Scorer auditável (regras ATT&CK + smart features + KB Chroma+BM25 RRF) → SLM Phi-3 Medium → LLM Judge Llama 3.2.',
+        stack: ['TransformerAE', 'Single-event AE', 'Qwen 2.5 32B', 'Heuristic Scorer', 'Phi-3 Medium', 'Llama 3.2'],
       },
       module3: {
         number: '03',
@@ -213,16 +213,16 @@ export const translations = {
     results: {
       eyebrow: 'Capítulo 05 · Resultados',
       title: 'Os números que\nnos defendem.',
-      lead: 'Métricas-chave sobre os datasets avaliados. 10 notebooks de investigação. Quatro datasets. Uma solução.',
+      lead: 'Duas abordagens, mesma pergunta: é ameaça? Em baixo, métricas-chave da Abordagem A (cyber-anomaly-detection) sobre os datasets avaliados. A Abordagem B (DualSentinel) traz auditabilidade em vez de pontuação agregada — ver capítulo de deteção de anomalias.',
 
       faceTitle: 'Reconhecimento facial — fine-tuning organizacional',
       faceSubtitle: 'Ambos os modelos atingem classificação perfeita; a diferença aparece na avaliação biométrica (EER). InsightFace corre em CPU, threshold 0.70.',
 
       metrics: [
-        { label: 'TransformerAE · AP em OTRF Atomic', value: '0.814', unit: '', kind: 'accuracy' },
-        { label: 'TransformerAE · AP em Splunk Range', value: '0.836', unit: '', kind: 'accuracy' },
-        { label: 'Single-event AE · AUC cross-dataset', value: '0.992', unit: '', kind: 'biometric' },
-        { label: 'RAG ATT&CK · Recall em OTRF', value: '60', unit: '%', kind: 'config' },
+        { label: 'Abord. A · TransformerAE · AP em OTRF Atomic', value: '0.814', unit: '', kind: 'accuracy' },
+        { label: 'Abord. A · TransformerAE · AP em Splunk Range', value: '0.836', unit: '', kind: 'accuracy' },
+        { label: 'Abord. A · Single-event AE · AUC cross-dataset', value: '0.992', unit: '', kind: 'biometric' },
+        { label: 'Abord. A · RAG ATT&CK · Recall em OTRF', value: '60', unit: '%', kind: 'config' },
       ],
 
       tableClosedCaption: 'Tabela A — Classificação closed-set (5 identidades, dataset organizacional)',
@@ -246,10 +246,10 @@ export const translations = {
         ],
       },
 
-      sentinelTitle: 'Pipeline de deteção — números globais',
+      sentinelTitle: 'Pipeline partilhado — números globais',
       sentinelMetrics: [
-        { label: 'Eventos Sysmon benignos para treino', value: '2.3M', unit: '' },
-        { label: 'Entradas na KB MITRE/OTRF/Sigma', value: '3.463', unit: '' },
+        { label: 'Eventos Sysmon benignos para treino (Abord. A)', value: '2.3M', unit: '' },
+        { label: 'Entradas na KB MITRE/OTRF/Sigma (partilhada)', value: '3.463', unit: '' },
         { label: 'T-codes com ground truth', value: '230', unit: 'técnicas' },
         { label: 'LLMs a correr localmente', value: '100%', unit: 'local' },
       ],
@@ -371,7 +371,7 @@ export const translations = {
       eyebrow: 'Chapter 02 · Architecture',
       title: 'Three pillars,\none cohesive system.',
       lead:
-        'Face authentication unlocks the SOC dashboard. Anomaly detection operates in two layers over Sysmon logs. RAG+LLM attribution tells the analyst exactly what and why.',
+        'Face authentication unlocks the SOC dashboard. Over the Sysmon logs we run two independent pipelines — one maximalist (TransformerAE + RAG/Qwen 32B), one auditable (Heuristic Scorer + Phi-3 → Llama 3.2). Same input, opposite philosophies.',
       module1: {
         number: '01',
         tag: 'RNAAPIA',
@@ -383,10 +383,10 @@ export const translations = {
       module2: {
         number: '02',
         tag: 'LNIAGIA · Anomalies',
-        title: 'Two-layer detection',
+        title: 'Two parallel pipelines',
         desc:
-          'Sequence TransformerAE (windows of 45 events, Word2Vec 352-dim, NAS+HPO via Optuna). Single-event AE scores each event individually for a surgical view of the threat.',
-        stack: ['PyTorch', 'TransformerAE', 'Word2Vec', 'Optuna', 'LMD-2023', 'OTRF'],
+          'cyber-anomaly-detection: TransformerAE (45 events, Word2Vec 352-dim, NAS+HPO Optuna) + Single-event AE + hybrid RAG with Qwen 2.5 32B. DualSentinel: auditable Heuristic Scorer (ATT&CK rules + smart features + Chroma+BM25 RRF KB) → SLM Phi-3 Medium → LLM Judge Llama 3.2.',
+        stack: ['TransformerAE', 'Single-event AE', 'Qwen 2.5 32B', 'Heuristic Scorer', 'Phi-3 Medium', 'Llama 3.2'],
       },
       module3: {
         number: '03',
@@ -528,16 +528,16 @@ export const translations = {
     results: {
       eyebrow: 'Chapter 05 · Results',
       title: 'The numbers\nthat defend us.',
-      lead: 'Key metrics across the evaluated datasets. 10 research notebooks. Four datasets. One solution.',
+      lead: 'Two approaches, same question: is this a threat? Below, key metrics for Approach A (cyber-anomaly-detection) over the evaluated datasets. Approach B (DualSentinel) trades aggregate scoring for auditability — see the anomaly detection chapter.',
 
       faceTitle: 'Face recognition — organisational fine-tuning',
       faceSubtitle: 'Both models reach perfect classification; the gap shows up in biometric evaluation (EER). InsightFace runs on CPU, threshold 0.70.',
 
       metrics: [
-        { label: 'TransformerAE · AP on OTRF Atomic', value: '0.814', unit: '', kind: 'accuracy' },
-        { label: 'TransformerAE · AP on Splunk Range', value: '0.836', unit: '', kind: 'accuracy' },
-        { label: 'Single-event AE · AUC cross-dataset', value: '0.992', unit: '', kind: 'biometric' },
-        { label: 'RAG ATT&CK · Recall on OTRF', value: '60', unit: '%', kind: 'config' },
+        { label: 'Appr. A · TransformerAE · AP on OTRF Atomic', value: '0.814', unit: '', kind: 'accuracy' },
+        { label: 'Appr. A · TransformerAE · AP on Splunk Range', value: '0.836', unit: '', kind: 'accuracy' },
+        { label: 'Appr. A · Single-event AE · AUC cross-dataset', value: '0.992', unit: '', kind: 'biometric' },
+        { label: 'Appr. A · RAG ATT&CK · Recall on OTRF', value: '60', unit: '%', kind: 'config' },
       ],
 
       tableClosedCaption: 'Table A — Closed-set classification (5 identities, organisational dataset)',
@@ -561,10 +561,10 @@ export const translations = {
         ],
       },
 
-      sentinelTitle: 'Detection pipeline — global numbers',
+      sentinelTitle: 'Shared pipeline — global numbers',
       sentinelMetrics: [
-        { label: 'Benign Sysmon events for training', value: '2.3M', unit: '' },
-        { label: 'MITRE/OTRF/Sigma KB entries', value: '3,463', unit: '' },
+        { label: 'Benign Sysmon events for training (Appr. A)', value: '2.3M', unit: '' },
+        { label: 'MITRE/OTRF/Sigma KB entries (shared)', value: '3,463', unit: '' },
         { label: 'T-codes with ground truth', value: '230', unit: 'techniques' },
         { label: 'LLMs running locally', value: '100%', unit: 'local' },
       ],
