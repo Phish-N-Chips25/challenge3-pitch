@@ -95,19 +95,7 @@ export default function CinematicReveal() {
       data-slide-scroll="true"
       className="relative h-screen w-screen overflow-hidden bg-white text-paper-100"
     >
-      {/* Letterbox bars */}
-      <motion.div
-        className="absolute top-0 left-0 right-0 bg-ink-800 z-30 pointer-events-none"
-        initial={{ height: '50%' }}
-        animate={{ height: '8%' }}
-        transition={{ duration: 1.0, ease: EASE }}
-      />
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 bg-ink-800 z-30 pointer-events-none"
-        initial={{ height: '50%' }}
-        animate={{ height: '8%' }}
-        transition={{ duration: 1.0, ease: EASE }}
-      />
+
 
       {/* Vinheta subtil */}
       <div
@@ -158,7 +146,7 @@ export default function CinematicReveal() {
       </div>
 
       {/* Marcadores de cena */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-6 font-mono text-[0.55rem] uppercase tracking-[0.4em] text-paper-400">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-6 font-mono text-[0.55rem] uppercase tracking-[0.4em] text-paper-400">
         <span className={scene === 0 ? 'text-phosphor' : ''}>I · Title</span>
         <span className={scene === 1 ? 'text-phosphor' : ''}>II · Site</span>
         <span className={scene === 2 ? 'text-phosphor' : ''}>III · Digital</span>

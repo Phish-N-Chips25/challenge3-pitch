@@ -2,21 +2,22 @@ import { motion } from 'framer-motion'
 import { useSlideDeck } from '../context/useSlideDeck'
 
 export default function SlideHints() {
-  const { index, total, prev, next } = useSlideDeck()
+  const { index, total, prev, next, slide } = useSlideDeck()
   const isFirst = index === 0
   const isLast = index === total - 1
+  const bottomClass = slide?.id === 'cinematic' ? 'bottom-16' : 'bottom-6'
 
   return (
     <>
       {/* Contador */}
-      <div className="fixed left-6 lg:left-12 bottom-6 z-40 font-mono text-[0.65rem] tracking-widest text-paper-400 tabular-nums">
+      <div className={`fixed left-6 lg:left-12 ${bottomClass} z-40 font-mono text-[0.65rem] tracking-widest text-paper-400 tabular-nums`}>
         <span className="text-phosphor">{String(index + 1).padStart(2, '0')}</span>
         <span className="mx-2 opacity-50">/</span>
         <span>{String(total).padStart(2, '0')}</span>
       </div>
 
       {/* Hint teclas */}
-      <div className="hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-40 items-center gap-3 font-mono text-[0.65rem] uppercase tracking-widest text-paper-400">
+      <div className={`hidden md:flex fixed ${bottomClass} left-1/2 -translate-x-1/2 z-40 items-center gap-3 font-mono text-[0.65rem] uppercase tracking-widest text-paper-400`}>
         <KeyHint disabled={isFirst} onClick={prev} label="←" />
         <span className="opacity-60">usa as setas</span>
         <KeyHint disabled={isLast} onClick={next} label="→" />

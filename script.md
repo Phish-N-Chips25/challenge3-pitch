@@ -41,33 +41,34 @@
 ## Slide 03 — IntroStory (7 frames)
 **[Narração cinematográfica — avançar clicando ou com →]**
 
-> Ler cada frame em voz alta, com pausa. A história segue a perspectiva do analista SOC.
+> Narração em primeira pessoa, tom lento e pausado. Falar como se fosses o analista. Não ler o texto do ecrã — o slide fala por si. A voz é a camada interior.
 
-**Frame 1:** "08:30 da manhã. O analista chega ao trabalho."  
-*sub:* "Antes do dashboard, antes dos alertas — o sistema precisa de saber quem ele é."  
-→ *Pausa. Deixar a imagem mental assentar.*
+**Frame 1** — *"08:30 da manhã. O analista chega ao trabalho."*  
+> "São oito e meia da manhã. Chego ao trabalho."  
+→ *Pausa longa. Deixar o frame assentar.*
 
-**Frame 2:** "Não é uma password."  
-*sub:* "Passwords podem ser roubadas. O que não pode ser roubado é o rosto dele."  
-→ *Tom de confiança.*
+**Frame 2** — *"Não é uma password."*  
+> "Antes de abrir um único alerta… o sistema precisa de saber quem eu sou. Não uma password. O meu rosto."  
+→ *Pausa.*
 
-**Frame 3:** "Autenticado."  
-*sub:* "InsightFace confirma: similaridade cosseno 0.83. Acima do threshold 0.70. A porta abre."  
-→ *Mudança de tom — sistema funcionou.*
+**Frame 3** — *"Autenticado."*  
+> "A câmara captura. Compara. Confirma."  
+→ *Pausa. Deixar a palavra 'Autenticado' fazer o trabalho.*
 
-**Frame 4:** "O dashboard carrega."  
-*sub:* "45 eventos Sysmon em janela. O TransformerAE reconstruiu o comportamento normal. Desvio detectado."  
-→ *Alerta discreto — algo está errado.*
+**Frame 4** — *"O dashboard carrega."*  
+> "Entro. O dashboard abre. E algures, entre milhões de logs… algo está errado."  
+→ *Tom de alerta subtil.*
 
-**Frame 5:** "Não é ruído."  
-*sub:* "AUC 0.991. O autoencoder por evento confirma: três eventos são cirurgicamente anómalos."  
-→ *Certeza crescente.*
+**Frame 5** — *"Não é ruído."*  
+> "Não é ruído. São três eventos. Cirurgicamente anómalos."  
+→ *Firmeza crescente.*
 
-**Frame 6:** "T1059. Execution."  
-*sub:* "O RAG consultou 3.463 técnicas. O Qwen 2.5 fundamentou o veredicto em evidências reais."  
-→ *O sistema nomeou a ameaça.*
+**Frame 6** — *"T1059. Execution."*  
+> "O sistema consultou três mil e quatrocentas técnicas. E nomeou o ataque."  
+→ *Pausa. Deixar o número da técnica visível.*
 
-**Frame 7:** "Isto é o Challenge 3."  
+**Frame 7** — *"Isto é o Challenge 3."*  
+> *(Silêncio.)*  
 → Clicar em **"Começar"** ou pressionar →.
 
 ---
