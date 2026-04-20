@@ -97,10 +97,7 @@ export default function FaceRecognition() {
           </svg>
           <p className="font-display font-light text-xl text-paper-300 relative">{t('face.demoPlaceholder')}</p>
           <p className="font-mono text-xs text-paper-500 mt-3 relative">{t('face.demoHint')}</p>
-
-          {/* Para substituir: colocar um <video> aqui:
               <video src="/demos/face-recognition.mp4" controls className="absolute inset-0 w-full h-full object-cover" />
-          */}
         </div>
       </div>
 
