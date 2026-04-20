@@ -7,8 +7,8 @@ export const translations = {
     nav: {
       scenario: 'Cenário',
       architecture: 'Arquitectura',
-      anomaly: 'Módulo 1',
-      face: 'Módulo 2',
+      anomaly: 'Anomalias',
+      face: 'Reconhecimento',
       results: 'Resultados',
       team: 'Equipa',
       references: 'Referências',
@@ -45,7 +45,7 @@ export const translations = {
         {
           tag: 'Pilar 03 — O que é?',
           title: 'Atribuição ATT&CK',
-          body: 'RAG híbrido (ChromaDB + BM25) sobre 3.463 entradas MITRE. Qwen 2.5 32B via Ollama produz chain-of-thought com ID da técnica, confiança e evidências. 100% local.',
+          body: 'Knowledge Base partilhada com 3.463 entradas MITRE/OTRF/Sigma (ChromaDB + BM25). Consumida por dois caminhos: RAG híbrido + Qwen 2.5 32B (cyber-anomaly-detection) e SLM Phi-3 Medium → LLM Judge Llama 3.2 (DualSentinel). 100% local via Ollama.',
         },
       ],
       note:
@@ -62,7 +62,7 @@ export const translations = {
         tag: 'RNAAPIA',
         title: 'Reconhecimento facial',
         desc:
-          'InsightFace buffalo_sc (ArcFace + RetinaFace) extrai embeddings de alta dimensão. Comparação por similaridade cosseno contra centroidés L2-normalizados das 5 identidades registadas. Threshold 0.70.',
+          'InsightFace buffalo_sc (ArcFace + RetinaFace) extrai embeddings de alta dimensão. Comparação por similaridade cosseno contra centróides L2-normalizados das 5 identidades registadas. Threshold 0.70.',
         stack: ['InsightFace', 'ArcFace', 'RetinaFace', 'ONNX Runtime', 'OpenCV', 'FaceNet'],
       },
       module2: {
@@ -76,10 +76,10 @@ export const translations = {
       module3: {
         number: '03',
         tag: 'LNIAGIA · ATT&CK',
-        title: 'Atribuição RAG + LLM',
+        title: 'Knowledge Base partilhada',
         desc:
-          'Base de conhecimento com 3.463 entradas MITRE/OTRF/Splunk/Sigma. RAG híbrido (ChromaDB + BM25). Qwen 2.5 32B chain-of-thought estruturado. 100% local via Ollama.',
-        stack: ['ChromaDB', 'BM25', 'Qwen 2.5 32B', 'Ollama', 'MITRE STIX', 'Sigma'],
+          'Base de conhecimento com 3.463 entradas MITRE/OTRF/Splunk/Sigma indexada em ChromaDB + BM25 (RRF). Partilhada pelos dois pipelines: cyber-anomaly-detection consome-a via RAG híbrido + Qwen 2.5 32B; DualSentinel via SLM Phi-3 Medium → LLM Judge Llama 3.2. 100% local via Ollama.',
+        stack: ['ChromaDB', 'BM25', 'Qwen 2.5 32B', 'Phi-3 Medium', 'Llama 3.2', 'Ollama', 'MITRE STIX'],
       },
     },
 
@@ -322,8 +322,8 @@ export const translations = {
     nav: {
       scenario: 'Scenario',
       architecture: 'Architecture',
-      anomaly: 'Module 1',
-      face: 'Module 2',
+      anomaly: 'Anomalies',
+      face: 'Face',
       results: 'Results',
       team: 'Team',
       references: 'References',
@@ -360,7 +360,7 @@ export const translations = {
         {
           tag: 'Pillar 03 — What is it?',
           title: 'ATT&CK Attribution',
-          body: 'Hybrid RAG (ChromaDB + BM25) over 3,463 MITRE entries. Qwen 2.5 32B via Ollama produces structured chain-of-thought with technique ID, confidence and evidence. 100% local.',
+          body: 'Shared Knowledge Base with 3,463 MITRE/OTRF/Sigma entries (ChromaDB + BM25). Consumed by two paths: hybrid RAG + Qwen 2.5 32B (cyber-anomaly-detection) and SLM Phi-3 Medium → LLM Judge Llama 3.2 (DualSentinel). 100% local via Ollama.',
         },
       ],
       note:
@@ -391,10 +391,10 @@ export const translations = {
       module3: {
         number: '03',
         tag: 'LNIAGIA · ATT&CK',
-        title: 'RAG + LLM attribution',
+        title: 'Shared Knowledge Base',
         desc:
-          'Knowledge base with 3,463 MITRE/OTRF/Splunk/Sigma entries. Hybrid RAG (ChromaDB + BM25). Qwen 2.5 32B structured chain-of-thought. 100% local via Ollama.',
-        stack: ['ChromaDB', 'BM25', 'Qwen 2.5 32B', 'Ollama', 'MITRE STIX', 'Sigma'],
+          'Knowledge base with 3,463 MITRE/OTRF/Splunk/Sigma entries indexed in ChromaDB + BM25 (RRF). Shared across both pipelines: cyber-anomaly-detection consumes it via hybrid RAG + Qwen 2.5 32B; DualSentinel via SLM Phi-3 Medium → LLM Judge Llama 3.2. 100% local via Ollama.',
+        stack: ['ChromaDB', 'BM25', 'Qwen 2.5 32B', 'Phi-3 Medium', 'Llama 3.2', 'Ollama', 'MITRE STIX'],
       },
     },
 
@@ -506,7 +506,7 @@ export const translations = {
       openTag: 'Open-set approach',
       openTitle: 'Cosine similarity verification',
       openBody:
-        'InsightFace buffalo_sc served via ONNXRuntime on CPU. Directory-based enrollment: embeddings extracted from each image and its horizontal flip, one L2-normalized centroid per identity. At inference, each webcam frame is compared against all centroids. Threshold ≥ 0.75 → access granted.',
+        'InsightFace buffalo_sc served via ONNXRuntime on CPU. Directory-based enrollment: embeddings extracted from each image and its horizontal flip, one L2-normalized centroid per identity. At inference, each webcam frame is compared against all centroids. Threshold ≥ 0.70 → access granted.',
 
       comparisonTitle: 'Why did we pick the open-set pipeline?',
       comparisonRows: [
